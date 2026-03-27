@@ -75,9 +75,21 @@ jobs:
             -v ${{ github.workspace }}/ccache:/ccache \
             ${{ env.IMAGE }}:latest
 
-      - name: Upload binary
+      - name: Upload binary and logs
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          mv output/scummvm output/scummvm.64
-          gh release upload "latest" output/scummvm.64 --clobber
+          if [ -f output/scummvm.64 ]; then
+            gh release upload "latest" output/scummvm.64 --clobber
+          else
+
+            mv output/scummvm output/scummvm.64
+            gh release upload "latest" output/scummvm.64 --clobber
+          fi
+
+          if [ -d output/logs ]; then
+            cd output/logs
+            zip -r ../../logs_64.zip ./*
+            cd ../..
+            gh release upload "latest" logs_64.zip --clobber
+          fi
