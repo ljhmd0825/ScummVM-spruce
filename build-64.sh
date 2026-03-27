@@ -42,6 +42,8 @@ export STRIP="aarch64-linux-gnu-strip"
 export PKG_CONFIG_PATH="/usr/lib/aarch64-linux-gnu/pkgconfig"
 export PKG_CONFIG_LIBDIR="/usr/lib/aarch64-linux-gnu/pkgconfig"
 export CCACHE_DIR="${CCACHE_DIR:-/ccache}"
+export CXXFLAGS="$CXXFLAGS -I/usr/include/libopenmpt"
+export CPPFLAGS="$CPPFLAGS -I/usr/include/libopenmpt"
 
 # Configure for universal 64-bit: SDL2 + OpenGL ES2, all engines
 ./configure \
