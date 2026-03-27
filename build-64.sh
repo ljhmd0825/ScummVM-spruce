@@ -44,7 +44,6 @@ export PKG_CONFIG_LIBDIR="/usr/lib/aarch64-linux-gnu/pkgconfig"
 export CCACHE_DIR="${CCACHE_DIR:-/ccache}"
 
 # Configure for universal 64-bit: SDL2 + OpenGL ES2, all engines
-
 ./configure \
     --host=aarch64-linux-gnu \
     --backend=sdl \
@@ -52,26 +51,23 @@ export CCACHE_DIR="${CCACHE_DIR:-/ccache}"
     --enable-all-engines \
     --enable-optimizations \
     --enable-release \
+    --disable-debug \
+    --disable-eventrecorder \
     --enable-vkeybd \
-    --enable-fluidsynth \
-    --enable-neon \
-    --enable-cloud \
-    --enable-enet
+    --enable-fluidsynth | tee configure_summary.txt
 
-#  Build
+# Build
 make -j$(nproc)
 
 # Output
 echo "=== Copying Binary and Build Logs ==="
 mkdir -p "$OUTPUT_DIR/logs"
 
-#
 cp scummvm "$OUTPUT_DIR/scummvm.64"
 $STRIP "$OUTPUT_DIR/scummvm.64"
 
-#
 cp config.h "$OUTPUT_DIR/logs/config.h"
 cp config.log "$OUTPUT_DIR/logs/config.log"
-cp config.mk "$OUTPUT_DIR/logs/config.mk"
+cp configure_summary.txt "$OUTPUT_DIR/logs/summary.txt"
 
 echo "=== Done! Check /output/scummvm.64 and /output/logs/ ==="
