@@ -56,7 +56,7 @@ export CCACHE_DIR="${CCACHE_DIR:-/ccache}"
     --enable-fluidsynth \
     --enable-neon \
     --enable-cloud \
-    --enable-enet | tee configure_summary.txt
+    --enable-enet
 
 #  Build
 make -j$(nproc)
@@ -73,6 +73,5 @@ $STRIP "$OUTPUT_DIR/scummvm.64"
 cp config.h "$OUTPUT_DIR/logs/config.h"
 cp config.log "$OUTPUT_DIR/logs/config.log"
 cp config.mk "$OUTPUT_DIR/logs/config.mk"
-cp configure_summary.txt "$OUTPUT_DIR/logs/summary.txt"
 
 echo "=== Done! Check /output/scummvm.64 and /output/logs/ ==="
